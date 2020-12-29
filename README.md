@@ -19,8 +19,6 @@
 - [DEVELOPMENT](#development)
 - [COMPATIBILITY](#compatibility)
 - [SEE ALSO](#see-also)
-  - [JavaScript](#javascript)
-  - [Perl](#perl)
 - [VERSION](#version)
 - [AUTHOR](#author)
 - [COPYRIGHT AND LICENSE](#copyright-and-license)
@@ -98,7 +96,7 @@ For example, if a product is available with the following options:
 \- the permutations can be generated with:
 
 ```javascript
-import { unfold } from '@chocolatey/enumerator'
+import { enumerator, unfold } from '@chocolatey/enumerator'
 
 const alphabets = unfold({
     color: ['red', 'black', 'pink'],
@@ -182,7 +180,7 @@ Takes an array of alphabets, or a single alphabet and a length (number of times
 to repeat the alphabet), and returns an array of all the permutations of
 symbols from each alphabet in lexicographical order.
 
-This is a wrapper around [enumerator](#enumerator), which gathers the generated
+This is a wrapper around [`enumerator`](#enumerator-1), which gathers the generated
 values into an array, i.e. the following are equivalent:
 
 ```javascript
@@ -276,11 +274,13 @@ The following NPM scripts are available:
 
 # SEE ALSO
 
+<!-- TOC:ignore -->
 ## JavaScript
 
 - [@kingjs/enumerable.from-each](https://www.npmjs.com/package/%40kingjs%2Fenumerable.from-each)
-- [@kingjs/odometer](https://repository.kingjs.net/odometer)
+- [@kingjs/odometer](https://www.npmjs.com/package/@kingjs/odometer)
 
+<!-- TOC:ignore -->
 ## Perl
 
 - [Algorithm::Odometer::Tiny](https://metacpan.org/pod/Algorithm::Odometer::Tiny)
