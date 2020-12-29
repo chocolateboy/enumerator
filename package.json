@@ -32,6 +32,7 @@
     "files": [
         "dist/index.esm.js",
         "dist/index.js",
+        "dist/index.umd.js",
         "dist/index.umd.min.js",
         "index.d.ts"
     ],
