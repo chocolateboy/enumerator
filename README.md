@@ -35,7 +35,7 @@ enumerator - generate a sequence of values in lexicographical order
 # FEATURES
 
 - no dependencies
-- 530 B minified + gzipped
+- &lt; 510 B minified + gzipped
 - fully typed (TypeScript)
 - CDN builds (UMD): [jsDelivr][], [unpkg][]
 

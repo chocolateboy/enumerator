@@ -1,4 +1,4 @@
-const { enumerate, enumerator, unfold } = require('..')
+const exported = require('..')
 
 const options = {
     color: ['black', 'pink'],
@@ -6,10 +6,7 @@ const options = {
     discount: false,
 }
 
-Object.assign(global, {
-    enumerate,
-    enumerator,
-    unfold,
+Object.assign(global, exported, {
     bools: [true, false],
     digits: Array.from({ length: 10 }, (_, i) => i),
     words: ['foo', 'bar', 'baz'],

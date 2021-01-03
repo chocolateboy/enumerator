@@ -1,3 +1,7 @@
+## 1.0.0 - TBD
+
+- fix performance nit
+
 ## 0.1.0 - 2021-01-03
 
 ### Features
