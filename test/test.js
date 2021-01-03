@@ -1,10 +1,13 @@
-const test        = require('ava')
-const fromEntries = require('fromentries') // XXX not available in node v10
+const test           = require('ava')
+const { Assertions } = require('ava/lib/assert.js')
+const fromEntries    = require('fromentries') // XXX not available in node v10
 
 const {
-    unfold,
     enumerate,
     enumerator,
+    generate,
+    generator,
+    unfold,
 } = require('..')
 
 const toString = {}.toString
@@ -17,6 +20,29 @@ const isGenerator = value => {
         && (Symbol.iterator in value)
         && (toString.call(value) === '[object Generator]')
 }
+
+// XXX hack to add methods to AVA's `t` object until official support for custom
+// assertions is added: https://github.com/avajs/ava/issues/1094
+Object.assign(Assertions.prototype, {
+    isError (fn, want) {
+        let error
+
+        try {
+            fn()
+        } catch (e) {
+            error = e
+        }
+
+        this.assert(error)
+        this.assert(error instanceof Error)
+        want(error)
+    }
+})
+
+test('exports', t => {
+    t.is(generate, enumerate)
+    t.is(generator, enumerator)
+})
 
 test('enumerator returns a generator', t => {
     t.true(isGenerator(enumerator(digits, 2)))
@@ -35,7 +61,7 @@ test('empty', t => {
     t.deepEqual(Array.from(enumerator([])), [[]])
 })
 
-test('single element', t => {
+test('single symbol', t => {
     const single1 = enumerate([true], 2)
     const single2 = enumerate([[true], [false]])
 
@@ -60,36 +86,37 @@ test('multiple alphabets', t => {
 })
 
 test('error', t => {
-    const invalid = name => ({
-        instanceOf: TypeError,
-        message: RegExp(`Invalid ${name}\\b`),
-    })
+    const invalid = name => error => {
+        t.assert(error instanceof TypeError)
+        t.regex(error.message, RegExp(`Invalid ${name}\\b`))
+        t.assert('value' in error)
+    }
 
-    t.throws(() => enumerate(digits, Math.PI), invalid('length'))
-    t.throws(() => enumerate(digits, Infinity), invalid('length'))
-    t.throws(() => enumerate(digits, 'foo'), invalid('length'))
-    t.throws(() => enumerate(digits, []), invalid('length'))
-    t.throws(() => enumerate(digits, null), invalid('length'))
-    t.throws(() => Array.from(enumerator(digits, Math.PI)), invalid('length'))
-    t.throws(() => Array.from(enumerator(digits, Infinity)), invalid('length'))
-    t.throws(() => Array.from(enumerator(digits, 'foo')), invalid('length'))
-    t.throws(() => Array.from(enumerator(digits, [])), invalid('length'))
-    t.throws(() => Array.from(enumerator(digits, null)), invalid('length'))
+    t.isError(() => enumerate(digits, Math.PI), invalid('length'))
+    t.isError(() => enumerate(digits, Infinity), invalid('length'))
+    t.isError(() => enumerate(digits, 'foo'), invalid('length'))
+    t.isError(() => enumerate(digits, []), invalid('length'))
+    t.isError(() => enumerate(digits, null), invalid('length'))
+    t.isError(() => Array.from(enumerator(digits, Math.PI)), invalid('length'))
+    t.isError(() => Array.from(enumerator(digits, Infinity)), invalid('length'))
+    t.isError(() => Array.from(enumerator(digits, 'foo')), invalid('length'))
+    t.isError(() => Array.from(enumerator(digits, [])), invalid('length'))
+    t.isError(() => Array.from(enumerator(digits, null)), invalid('length'))
 
-    t.throws(() => enumerate(new Set(digits)), invalid('alphabets'))
-    t.throws(() => enumerate(''), invalid('alphabets'))
-    t.throws(() => Array.from(enumerator(new Set(digits))), invalid('alphabets'))
-    t.throws(() => Array.from(enumerator('')), invalid('alphabets'))
+    t.isError(() => enumerate(new Set(digits)), invalid('alphabets'))
+    t.isError(() => enumerate(''), invalid('alphabets'))
+    t.isError(() => Array.from(enumerator(new Set(digits))), invalid('alphabets'))
+    t.isError(() => Array.from(enumerator('')), invalid('alphabets'))
 
-    t.throws(() => enumerate(digits), invalid('alphabet'))
-    t.throws(() => enumerate(digits, -1), invalid('alphabet'))
-    t.throws(() => Array.from(enumerator(digits)), invalid('alphabet'))
-    t.throws(() => Array.from(enumerator(digits, -1)), invalid('alphabet'))
+    t.isError(() => enumerate(digits), invalid('alphabet'))
+    t.isError(() => enumerate(digits, -1), invalid('alphabet'))
+    t.isError(() => Array.from(enumerator(digits)), invalid('alphabet'))
+    t.isError(() => Array.from(enumerator(digits, -1)), invalid('alphabet'))
 
-    t.throws(() => enumerate(new Set(digits), 1), invalid('alphabet'))
-    t.throws(() => enumerate('foo', 1), invalid('alphabet'))
-    t.throws(() => Array.from(enumerator(new Set(digits), 1)), invalid('alphabet'))
-    t.throws(() => Array.from(enumerator('foo', 1)), invalid('alphabet'))
+    t.isError(() => enumerate(new Set(digits), 1), invalid('alphabet'))
+    t.isError(() => enumerate('foo', 1), invalid('alphabet'))
+    t.isError(() => Array.from(enumerator(new Set(digits), 1)), invalid('alphabet'))
+    t.isError(() => Array.from(enumerator('foo', 1)), invalid('alphabet'))
 })
 
 test('password', t => {
@@ -115,7 +142,7 @@ test('password', t => {
     t.true(set.has('ROSEBUD'))
 })
 
-test('product', t => {
+test('unfold', t => {
     const alphabets = unfold({
         color: ['red', 'black', 'pink'],
         size: ['small', 'medium', 'large'],

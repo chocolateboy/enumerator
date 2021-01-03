@@ -1,18 +1,27 @@
-type ElementOf<T> = T extends Array<infer V> ? V : never;
+type ElementOf<T extends readonly any[]> = T extends Array<infer V> ? V : never;
+type Predicate = (value: any) => boolean;
 
-const checkType = (predicate: Function, want: string, defaultName?: string) => {
+const { from: arrayFrom, isArray } = Array
+const toString = {}.toString
+
+const checkType = (predicate: Predicate, want: string, defaultName?: string) => {
     return (value: any, name = defaultName) => {
         if (!predicate(value)) {
             const type = value === null ? 'null' : typeof value
-            const got = type === 'object' ? {}.toString.call(value).slice(8, -1) : type
-            throw new TypeError(`Invalid ${name} (${value}): expected ${want}, got: ${got}`)
+            const got = type === 'object' ? toString.call(value).slice(8, -1) : type
+
+            // XXX this should probably be a subclass of TypeError, e.g.
+            //
+            //   new ArgumentError(name: string, value: any, message?: string)
+            const error = new TypeError(`Invalid ${name}: expected ${want}, got: ${got}`)
+            throw Object.assign(error, { value })
         }
 
         return value
     }
 }
 
-const checkArray = checkType(Array.isArray, 'Array', 'alphabet')
+const checkArray = checkType(isArray, 'Array', 'alphabet')
 const checkLength = checkType(Number.isSafeInteger, 'integer')
 
 export const unfold = <V>(obj: Record<string, V | V[]>) => {
@@ -35,7 +44,7 @@ function* enumerator(args: any[], length = -1) {
         alphabetAt = (index: number) => args[index]
     } else { // single alphabet repeated length times
         checkArray(args)
-        result = Array.from({ length }, () => args[0]) // first result
+        result = arrayFrom({ length }, () => args[0]) // first result
         alphabetAt = () => args
     }
 
@@ -47,7 +56,7 @@ function* enumerator(args: any[], length = -1) {
     const last = length - 1
 
     // an array of indices into each alphabet
-    const odometer = Array.from({ length }, () => 0)
+    const odometer = arrayFrom({ length }, () => 0)
 
     while (true) {
         // emit the current result
@@ -86,7 +95,12 @@ function* enumerator(args: any[], length = -1) {
 function enumerate<T>(alphabet: T[], length: number): Array<T[]>
 function enumerate<T extends readonly any[]>(alphabets: T[]): Array<Array<ElementOf<T>>>
 function enumerate (args: any[], length = -1) {
-    return Array.from(enumerator(args, length))
+    return arrayFrom(enumerator(args, length))
 }
 
-export { enumerate, enumerator }
+export {
+    enumerate,
+    enumerator,
+    enumerate as generate,
+    enumerator as generator
+}
