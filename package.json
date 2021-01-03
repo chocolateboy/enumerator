@@ -1,6 +1,6 @@
 {
     "name": "@chocolatey/enumerator",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Generate a sequence of values in lexicographical order",
     "author": "chocolateboy",
     "repository": "https://github.com/chocolateboy/enumerator",
