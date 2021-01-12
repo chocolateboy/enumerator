@@ -11,7 +11,6 @@
 - [SYNOPSIS](#synopsis)
 - [DESCRIPTION](#description)
   - [Why?](#why)
-  - [Why not?](#why-not)
 - [EXPORTS](#exports)
   - [enumerate](#enumerate)
   - [enumerator](#enumerator)
@@ -91,15 +90,6 @@ enumerate([0, 1], 2) // [[0, 0], [0, 1], [1, 0], [1, 1]]
 > cases is necessary or desirable.
 
 — Donald Knuth, *The Art of Computer Programming*, Section 7.2.1.1, Generating All <i>n</i>-Tuples.
-
-## Why not?
-
-> Some authors call this the task of *enumerating* all of the possibilities; but
-> that's not quite the right word, because "enumeration" most often means that
-> we merely want to *count* the total number of cases, not that we actually want
-> to look at them all.
-
-— *Ibid.*
 
 # EXPORTS
 
