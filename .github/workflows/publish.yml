@@ -1,11 +1,6 @@
 name: publish
 
 on:
-  workflow_run:
-    workflows:
-      - test
-    types:
-      - completed
   push:
     branches:
       - master
@@ -19,8 +14,6 @@ jobs:
   publish:
     name: 'Publish to NPM'
     runs-on: 'ubuntu-latest'
-    # https://github.community/t/workflow-run-success-type-reference/133194/2
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: checkout
