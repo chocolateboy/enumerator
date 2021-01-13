@@ -1,0 +1,43 @@
+name: publish
+
+on:
+  workflow_run:
+    workflows:
+      - test
+    types:
+      - completed
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*'
+
+env:
+  CI: true
+
+jobs:
+  publish:
+    name: 'Publish to NPM'
+    runs-on: 'ubuntu-latest'
+    # https://github.community/t/workflow-run-success-type-reference/133194/2
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: set up node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: install
+        run: yarn install --prefer-offline
+
+      - name: test
+        run: yarn run prepublishOnly
+
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          access: public
+          token: ${{ secrets.NPM_TOKEN }}
