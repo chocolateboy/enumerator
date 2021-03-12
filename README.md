@@ -153,11 +153,11 @@ const options = {
 const alphabets = unfold(options)
 ```
 
-```json
+```javascript
 [
-    [["color", "black"], ["color", "pink"]],
-    [["size", "small"], ["size", "large"]],
-    [["discount", false]]
+    [["color", "black"], ["color", "pink"]], // 0
+    [["size", "small"], ["size", "large"]],  // 1
+    [["discount", false]]                    // 2
 ]
 ```
 
