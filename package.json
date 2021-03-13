@@ -4,7 +4,7 @@
     "description": "Generate a sequence of values in lexicographical order",
     "author": "chocolateboy",
     "repository": "https://github.com/chocolateboy/enumerator",
-    "license": "Artistic-2.0",
+    "license": "MIT",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
     "unpkg": "dist/index.umd.min.js",

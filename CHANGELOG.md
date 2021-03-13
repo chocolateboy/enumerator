@@ -1,3 +1,7 @@
+## 1.1.0 - TBD
+
+- relicense: Artistic 2.0 -> MIT
+
 ## 1.0.1 - 2021-01-13
 
 - documentation tweaks
