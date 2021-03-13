@@ -287,7 +287,7 @@ The following NPM scripts are available:
 
 # VERSION
 
-1.0.1
+1.1.0
 
 # AUTHOR
 
@@ -300,5 +300,5 @@ Copyright © 2020-2021 by chocolateboy.
 This is free software; you can redistribute it and/or modify it under the terms
 of the [MIT license](https://opensource.org/licenses/MIT).
 
-[jsDelivr]: https://cdn.jsdelivr.net/npm/@chocolatey/enumerator@1.0.1/dist/index.umd.min.js
-[unpkg]: https://unpkg.com/@chocolatey/enumerator@1.0.1/dist/index.umd.min.js
+[jsDelivr]: https://cdn.jsdelivr.net/npm/@chocolatey/enumerator
+[unpkg]: https://unpkg.com/@chocolatey/enumerator
