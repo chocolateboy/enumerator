@@ -34,7 +34,7 @@ enumerator - generate a sequence of values in lexicographical order
 # FEATURES
 
 - no dependencies
-- &lt; 510 B minified + gzipped
+- ~500 B minified + gzipped
 - fully typed (TypeScript)
 - CDN builds (UMD): [jsDelivr][], [unpkg][]
 
@@ -221,13 +221,14 @@ For example, if a product is available with the following options:
 \- the permutations can be generated with:
 
 ```javascript
-import { enumerator, unfold } from '@chocolatey/enumerator'
+import { enumerate, unfold } from '@chocolatey/enumerator'
 
-const alphabets = unfold({
+const options = {
     color: ['red', 'black', 'pink'],
     size: ['small', 'medium', 'large'],
-})
+}
 
+const alphabets = unfold(options)
 const products = enumerate(alphabets).map(Object.fromEntries)
 ```
 
