@@ -29,7 +29,7 @@
 
 # NAME
 
-enumerator - generate a sequence of values in lexicographical order
+enumerator - generate a series of tuples in lexicographical order
 
 # FEATURES
 
@@ -64,12 +64,12 @@ enumerate(bits, 2) // [[0, 0], [0, 1], [1, 0], [1, 1]]
 
 # DESCRIPTION
 
-Enumerator generates a sequence of values in lexicographical order. Each value
-is a tuple (array) of symbols drawn from a custom alphabet for each index in
-the tuple. Symbols can be of any type.
+Enumerator generates a series of tuples in lexicographical order. Each tuple is
+an array of values drawn from a custom alphabet for each position. Values can
+be of any type.
 
 The mechanism for generating the values is the same as an odometer, i.e. the
-rightmost dial/column is incremented for each value, moving left each time a
+rightmost dial/column is incremented for each result, moving left each time a
 dial rolls over, and halting when the leftmost dial rolls over, e.g.:
 
 ```javascript
@@ -108,7 +108,7 @@ enumerate([0, 1], 2) // [[0, 0], [0, 1], [1, 0], [1, 1]]
 
 Takes an array of alphabets, or a single alphabet and a length (number of times
 to repeat the alphabet), and returns an array of all the permutations of
-symbols from each alphabet in lexicographical order.
+values from each alphabet in lexicographical order.
 
 This is a wrapper around [`enumerator`](#enumerator-1) which gathers the generated
 values into an array, i.e. the following are equivalent:
@@ -134,7 +134,7 @@ for (const value of enumerator([0, 1], 2)) {
 ```
 
 Takes an array of alphabets, or a single alphabet and a length (number of times
-to repeat the alphabet), and yields all the permutations of symbols from each
+to repeat the alphabet), and yields all the permutations of values from each
 alphabet in lexicographical order.
 
 ## unfold
@@ -207,7 +207,7 @@ This generates 864 different candidates, including "rosebud", "r053buD",
 
 ## Combining options
 
-Although any types can be used as symbols, a specific task may require some
+Although any types can be used as values, a specific task may require some
 data munging to encode its choices as alphabets. To this end, a helper
 function, [`unfold`](#unfold), is available which translates a plain object
 into an array of alphabets of key/value pairs representing an option or
