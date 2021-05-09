@@ -50,7 +50,6 @@ $ npm install @chocolatey/enumerator
 import { enumerate, enumerator } from '@chocolatey/enumerator'
 
 const bits = [0, 1]
-const bools = [false, true]
 const words = ['foo', 'bar', 'baz', 'quux']
 
 // generator

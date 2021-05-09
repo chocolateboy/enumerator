@@ -74,15 +74,15 @@ function* enumerator(args: any[], length = -1) {
 
             if (index >= alphabet.length) { // roll over
                 if (dial === 0) { // leftmost dial
-                    return
+                    return // break out of the while loop
                 } else {
-                    odometer[dial] = index = 0 // reset
+                    odometer[dial] = index = 0 // reset (and move left)
                 }
             }
 
             result[dial] = alphabet[index]
 
-            if (index) {
+            if (index) { // didn't roll over
                 break
             }
         }
