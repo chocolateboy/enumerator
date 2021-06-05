@@ -145,7 +145,7 @@ import { unfold } from '@chocolatey/enumerator'
 
 const options = {
     color: ['black', 'pink'],
-    size: ['small', 'large'],
+    size: ['small', 'medium', 'large'],
     discount: false,
 }
 
@@ -154,9 +154,9 @@ const alphabets = unfold(options)
 
 ```javascript
 [
-    [["color", "black"], ["color", "pink"]], // 0
-    [["size", "small"], ["size", "large"]],  // 1
-    [["discount", false]]                    // 2
+    [["color", "black"], ["color", "pink"]],                    // 0
+    [["size", "small"], ["size", "medium"], ["size", "large"]], // 1
+    [["discount", false]]                                       // 2
 ]
 ```
 
@@ -214,7 +214,7 @@ feature.
 
 For example, if a product is available with the following options:
 
-- color: red, black, pink
+- color: black, pink
 - size: small, medium, large
 
 \- the permutations can be generated with:
@@ -223,7 +223,7 @@ For example, if a product is available with the following options:
 import { enumerate, unfold } from '@chocolatey/enumerator'
 
 const options = {
-    color: ['red', 'black', 'pink'],
+    color: ['black', 'pink'],
     size: ['small', 'medium', 'large'],
 }
 
@@ -235,9 +235,6 @@ const products = enumerate(alphabets).map(Object.fromEntries)
 
 ```javascript
 [
-    { color: 'red', size: 'small' },
-    { color: 'red', size: 'medium' },
-    { color: 'red', size: 'large' },
     { color: 'black', size: 'small' },
     { color: 'black', size: 'medium' },
     { color: 'black', size: 'large' },

@@ -144,7 +144,7 @@ test('password', t => {
 
 test('unfold', t => {
     const alphabets = unfold({
-        color: ['red', 'black', 'pink'],
+        color: ['black', 'pink'],
         size: ['small', 'medium', 'large'],
     })
 
