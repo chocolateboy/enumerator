@@ -1,6 +1,6 @@
 {
     "name": "@chocolatey/enumerator",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Generate a series of tuples in lexicographical order",
     "author": "chocolateboy",
     "repository": "https://github.com/chocolateboy/enumerator",
